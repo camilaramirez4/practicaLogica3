@@ -5,12 +5,17 @@
 package main;
 
 import java.awt.Color;
+import java.util.ArrayList;
 
 /**
  *
  * @author cami0
  */
 public class Frame extends javax.swing.JFrame {
+    
+    // Creamos un vector que contendrá el polinomio en Vector forma 2.
+    static ArrayList<Double> polinomio1;
+        
 
     /**
      * Creates new form Frame
@@ -158,6 +163,25 @@ public class Frame extends javax.swing.JFrame {
         // TODO add your handling code here:
         double coeficiente = Double.parseDouble(Coeficiente.getText());
         double exponente = Double.parseDouble(Exponente.getText());
+        
+        // Evaluamos si el exponente ingresado ya existe en el array.
+        // En caso de no existir, se obtendrá un -1.
+        if(polinomio1.indexOf(exponente) == -1) {
+            // Añadimos los datos obtenidos al vector.
+            polinomio1.add(exponente);
+            polinomio1.add(coeficiente);
+        } else {
+            // En caso de ya existir el exponente en el array, sumamos los coeficientes.
+            int index = polinomio1.indexOf(exponente);
+            polinomio1.set(index + 1, polinomio1.get(index + 1) + coeficiente);
+        }
+        
+        // Aumentamos el valor que indica la cantidad de términos diferentes de cero.
+        polinomio1.set(0, polinomio1.get(0) + 1);
+        
+        System.out.println(polinomio1);
+        // ToDo: Faltaría permitir que se ingrese más de un polinomio.
+        
     }//GEN-LAST:event_SumarActionPerformed
 
     private void CoeficienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CoeficienteActionPerformed
@@ -201,6 +225,11 @@ public class Frame extends javax.swing.JFrame {
                 new Frame().setVisible(true);
             }
         });
+        
+        // Inicializamos el vector polinomio.
+        polinomio1 = new ArrayList<Double>();
+        // Iniciamos la primera posición en 0, pues representa el número de términos diferentes de cero.
+        polinomio1.add(0, 0.0);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
